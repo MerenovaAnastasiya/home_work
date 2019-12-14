@@ -1,17 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 int main(int argc, char* argv[])
 {
-  FILE *rf;
-  if((rf=fopen(argv[1], "r"))==NULL) {
-    printf ("Cannot open file.\n");
+  FILE *rf = fopen(argv[1], "r");
+  if(rf == NULL) {
+    printf ("Cannot open file 1\n");
     exit(1);
   }
 
-  FILE *wf;
-  if((wf=fopen(argv[2], "w"))==NULL) {
-    printf ("Cannot open file.\n");
+  FILE *wf = fopen(argv[2], "w");
+  if(wf == NULL) {
+    printf ("Cannot open file 2\n");
     exit(1);
   }
 
@@ -26,6 +28,9 @@ int main(int argc, char* argv[])
          }
     
       fputc(c, wf);
-    }
+  }
+  struct stat st; 
+  stat(argv[1], &st);
+  chmod(argv[2], st.st_mode);
 
 }
